@@ -30,7 +30,7 @@ class BD_Widgets_Shortcode_Helper{
        
         //use [widget-area id='something'] or [dynamic-sidebar id=something]
         add_shortcode( 'widget-area', array( $this, 'generate_widget_area' ) );//use [widget-area id='somewidgetarea' ][/widget-area]
-        add_shortcode('dynamic-sidebar', array( $this, 'generate_widget_area' ) );//use [widget-area id='somewidgetarea' ][/widget-area]
+        add_shortcode( 'dynamic-sidebar', array( $this, 'generate_widget_area' ) );//use [widget-area id='somewidgetarea' ][/widget-area]
      
                
 
@@ -50,27 +50,27 @@ class BD_Widgets_Shortcode_Helper{
     }
     
     
-    public function generate_widget_area($atts,$content=''){
+    public function generate_widget_area( $atts, $content = '' ){
         
         extract(shortcode_atts(array(
-                'id'=>'',
-                'before'=>'',
-                'after'=>''
+                'id'        => '',
+                'before'    => '',
+                'after'     => ''
                 
         ), $atts ) );
         
        
        $id = trim ( $id );
        
-       if( is_active_sidebar( $id ) ){
-           ob_start();   //start buffer      
-           echo $before;
-           dynamic_sidebar( $id );
-           echo $after;
-
-           $content=ob_get_clean();//get it all and clean buffer
        
-       }
+        ob_start();   //start buffer      
+        echo $before;
+        dynamic_sidebar( $id );
+        echo $after;
+
+        $content = ob_get_clean();//get it all and clean buffer
+       
+       
         
        return $content;
     }

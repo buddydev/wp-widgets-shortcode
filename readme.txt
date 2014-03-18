@@ -3,8 +3,8 @@ Contributors: sbrajesh,buddydev
 Donate link: http://buddydev.com/donate/
 Tags: widgets, dynamic sidebar, shortcodes, embed, embed widgets
 Requires at least: 2.5
-Tested up to: 3.5.2
-Stable tag: 1.0.1
+Tested up to: 3.8.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,9 @@ Please leave a comment here [BuddyDev.com](http://buddydev.com/wordpress/embed-w
 2. An example  on how to embed the widget area in post edit screen screenshot-2.png
 3. An example of the output in the middle of the post content screenshot-3.png
 == Changelog ==
+
+= 1.0.2 =
+* Fix the issue is_active_sidebar not recognizing the sidebar by name 
 
 = 1.0.1 =
 * Use trim function to remove any space in the name of the widget area.
