@@ -8,43 +8,41 @@
  * License: GPL
  * Description: Embed any widget area(dynamic sidebar) to your WordPress pages/posts using the shortcode [widget-area id='The Name of Widget Area']
  */
-//BD for BuddyDev
+
+/**
+ * Class BD_Widgets_Shortcode_Helper
+ */
 class BD_Widgets_Shortcode_Helper {
 
-
+	/**
+	 * Class instance.
+	 *
+	 * @var BD_Widgets_Shortcode_Helper
+	 */
 	private static $instance;
 
+	/**
+	 * The constructor.
+	 */
 	private function __construct() {
-
-		//register shortcodes
 		$this->register_shortcodes();
-
 	}
 
 	/**
-	 * Register  shortcodes
-	 *
+	 * Register ShortCodes
 	 */
 	private function register_shortcodes() {
 
+		// Use [widget-area id='something'] or [dynamic-sidebar id=something].
+		add_shortcode( 'widget-area', array( $this, 'generate_widget_area' ) );
 
-		//use [widget-area id='something'] or [dynamic-sidebar id=something]
-		add_shortcode( 'widget-area', array(
-			$this,
-			'generate_widget_area'
-		) );//use [widget-area id='somewidgetarea' ][/widget-area]
-		add_shortcode( 'dynamic-sidebar', array(
-			$this,
-			'generate_widget_area'
-		) );//use [widget-area id='somewidgetarea' ][/widget-area]
-
-
+		// Use [widget-area id='somewidgetarea' ][/widget-area].
+		add_shortcode( 'dynamic-sidebar', array( $this, 'generate_widget_area' ) );
 	}
 
 	/**
-	 * Get Instance
+	 * Get class instance
 	 *
-	 * Use singleton pattern
 	 * @return BD_Widgets_Shortcode_Helper
 	 */
 	public static function get_instance() {
@@ -56,30 +54,37 @@ class BD_Widgets_Shortcode_Helper {
 		return self::$instance;
 	}
 
-
+	/**
+	 * Render widget content
+	 *
+	 * @param array  $atts      Attributes.
+	 * @param string $content   Content widget start and ending tag.
+	 *
+	 * @return string
+	 */
 	public function generate_widget_area( $atts, $content = '' ) {
 
-		extract( shortcode_atts( array(
+		$atts = shortcode_atts( array(
 			'id'        => '',
 			'before'    => '',
-			'after'     => ''
+			'after'     => '',
+		), $atts );
 
-		), $atts ) );
+		$id = trim( $atts['id'] );
 
+		ob_start();
 
-		$id = trim( $id );
+		echo $atts['before'];
 
-
-		ob_start();   //start buffer
-		echo $before;
 		dynamic_sidebar( $id );
-		echo $after;
 
-		$content = ob_get_clean();//get it all and clean buffer
+		echo $atts['after'];
+
+		$content = ob_get_clean();
 
 		return $content;
 	}
-
 }
 
 BD_Widgets_Shortcode_Helper::get_instance();
+
